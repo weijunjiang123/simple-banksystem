@@ -1,28 +1,29 @@
-#include "Account.h"
+#include "account.h"
+#include <cmath>
+#include <iostream>
+using namespace std;
 
-Account::Account(string i, double b, double t)
-{
-	id = i;
-	balance = b;
-	total = t;
+double Account::total = 0;
+
+//Account类的实现
+Account::Account(const Date& date, const string& id)
+	: id(id), balance(0) {
+	date.show();
+	cout << "\t#" << id << " created" << endl;
 }
 
-void Account::record(Date date, double desc)
-{
-
+void Account::record(const Date& date, double amount, const string& desc) {
+	amount = floor(amount * 100 + 0.5) / 100;	//保留小数点后两位
+	balance += amount;
+	total += amount;
+	date.show();
+	cout << "\t#" << id << "\t" << amount << "\t" << balance << "\t" << desc << endl;
 }
 
-string Account::getId()
-{
-	return id;
+void Account::show() const {
+	cout << id << "\tBalance: " << balance;
 }
 
-double Account::getBalance()
-{
-	return balance;
-}
-
-double Account::getTotal()
-{
-	return total;
+void Account::error(const string& msg) const {
+	cout << "Error(#" << id << "): " << msg << endl;
 }
